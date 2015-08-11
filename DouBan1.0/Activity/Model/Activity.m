@@ -26,7 +26,11 @@
 - (void)setValue:(id)value forKey:(NSString *)key
 {
     [super setValue:value forKey:key];
+    // 调用的是父类传递过来的方法，给本model 的属性赋值。
     if ([key isEqualToString:@"image"]) {
+        
+//        NSLog(@"%@", self.image);
+         //  self.image = nil; // 先至空 string -》nil，后网络请求赋值 -》image
         self.imageUrl = value;
         // model的 image（UIimage 赋值）
 #pragma 图片下载实例化

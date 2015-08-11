@@ -149,6 +149,7 @@
             _activityImage.image = [UIImage imageNamed:@"picholder"];
         } else {
             _activityImage.image = activity.activityImage;
+            
         }
         
         // 加载图片。用的block

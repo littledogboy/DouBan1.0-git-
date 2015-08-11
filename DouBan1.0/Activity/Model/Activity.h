@@ -19,7 +19,7 @@
 @property (nonatomic,retain) NSString *category_name; // 类型
 @property (nonatomic,retain) NSString *wisher_count; // 感兴趣人数
 @property (nonatomic,retain) NSString *participant_count; // 参加人数
-@property (nonatomic,retain) NSString *imageUrl;
-@property (nonatomic,retain)  UIImage *activityImage;
+@property (nonatomic,retain) NSString *imageUrl; // 图片链接
+@property (nonatomic,retain)  UIImage *activityImage; // 图片对象
 
 @end
