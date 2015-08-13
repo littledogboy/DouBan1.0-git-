@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		6C033A651B77B8070098718D /* ImageDownLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C033A641B77B8070098718D /* ImageDownLoader.m */; };
+		6C8A298A1B7CC252009D858D /* login_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C8A29861B7CC252009D858D /* login_button.png */; };
+		6C8A298B1B7CC252009D858D /* login_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C8A29871B7CC252009D858D /* login_button@2x.png */; };
+		6C8A298C1B7CC252009D858D /* register_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C8A29881B7CC252009D858D /* register_button.png */; };
+		6C8A298D1B7CC252009D858D /* register_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C8A29891B7CC252009D858D /* register_button@2x.png */; };
+		6C8A29901B7CC5CA009D858D /* ActivityDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8A298F1B7CC5CA009D858D /* ActivityDetailView.m */; };
+		6C8A29951B7CF0DB009D858D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8A29941B7CF0DB009D858D /* MBProgressHUD.m */; };
 		6C8D25981B71F72F00558CA7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8D25971B71F72F00558CA7 /* main.m */; };
 		6C8D259B1B71F72F00558CA7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8D259A1B71F72F00558CA7 /* AppDelegate.m */; };
 		6C8D259D1B71F72F00558CA7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C8D259C1B71F72F00558CA7 /* Images.xcassets */; };
@@ -86,6 +92,14 @@
 /* Begin PBXFileReference section */
 		6C033A631B77B8070098718D /* ImageDownLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageDownLoader.h; sourceTree = "<group>"; };
 		6C033A641B77B8070098718D /* ImageDownLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDownLoader.m; sourceTree = "<group>"; };
+		6C8A29861B7CC252009D858D /* login_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_button.png; sourceTree = "<group>"; };
+		6C8A29871B7CC252009D858D /* login_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_button@2x.png"; sourceTree = "<group>"; };
+		6C8A29881B7CC252009D858D /* register_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = register_button.png; sourceTree = "<group>"; };
+		6C8A29891B7CC252009D858D /* register_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "register_button@2x.png"; sourceTree = "<group>"; };
+		6C8A298E1B7CC5CA009D858D /* ActivityDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityDetailView.h; sourceTree = "<group>"; };
+		6C8A298F1B7CC5CA009D858D /* ActivityDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailView.m; sourceTree = "<group>"; };
+		6C8A29931B7CF0DB009D858D /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		6C8A29941B7CF0DB009D858D /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		6C8D25921B71F72F00558CA7 /* DouBan1.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DouBan1.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C8D25961B71F72F00558CA7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6C8D25971B71F72F00558CA7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -188,6 +202,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6C8A29851B7CC252009D858D /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				6C8A29861B7CC252009D858D /* login_button.png */,
+				6C8A29871B7CC252009D858D /* login_button@2x.png */,
+				6C8A29881B7CC252009D858D /* register_button.png */,
+				6C8A29891B7CC252009D858D /* register_button@2x.png */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		6C8A29911B7CF0DB009D858D /* TheThird_Party */ = {
+			isa = PBXGroup;
+			children = (
+				6C8A29921B7CF0DB009D858D /* MBProgressHUD */,
+			);
+			path = TheThird_Party;
+			sourceTree = "<group>";
+		};
+		6C8A29921B7CF0DB009D858D /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				6C8A29931B7CF0DB009D858D /* MBProgressHUD.h */,
+				6C8A29941B7CF0DB009D858D /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
 		6C8D25891B71F72F00558CA7 = {
 			isa = PBXGroup;
 			children = (
@@ -211,6 +253,7 @@
 			children = (
 				6C8D25991B71F72F00558CA7 /* AppDelegate.h */,
 				6C8D259A1B71F72F00558CA7 /* AppDelegate.m */,
+				6C8A29911B7CF0DB009D858D /* TheThird_Party */,
 				6C9895791B7651100022AB01 /* UIView+Additions */,
 				6C8D25E11B720C3E00558CA7 /* LocalSource */,
 				6C8D25DD1B7203E200558CA7 /* Singleton */,
@@ -293,6 +336,8 @@
 				6CAC0AC01B76472D00ACF737 /* ActivityInfoView.m */,
 				6C98959C1B7663A80022AB01 /* ActivityCountView.h */,
 				6C98959D1B7663A80022AB01 /* ActivityCountView.m */,
+				6C8A298E1B7CC5CA009D858D /* ActivityDetailView.h */,
+				6C8A298F1B7CC5CA009D858D /* ActivityDetailView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -471,6 +516,7 @@
 		6CAC0A611B76465100ACF737 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				6C8A29851B7CC252009D858D /* Login */,
 				6CAC0A621B76465100ACF737 /* ActivityDetail */,
 				6CAC0A6B1B76465100ACF737 /* ActivityList */,
 				6CAC0A781B76465100ACF737 /* MovieList */,
@@ -674,6 +720,7 @@
 				6CAC0AA01B76465100ACF737 /* icon_catalog.png in Resources */,
 				6CAC0AA71B76465100ACF737 /* picholder@2x.png in Resources */,
 				6CAC0A961B76465100ACF737 /* icon_date_blue.png in Resources */,
+				6C8A298B1B7CC252009D858D /* login_button@2x.png in Resources */,
 				6CAC0A991B76465100ACF737 /* icon_sponsor_blue@2x.png in Resources */,
 				6CAC0AB81B76465100ACF737 /* picholder_profile.png in Resources */,
 				6CAC0A981B76465100ACF737 /* icon_sponsor_blue.png in Resources */,
@@ -682,6 +729,7 @@
 				6CAC0AA91B76465100ACF737 /* ic_star_red@2x.png in Resources */,
 				6CAC0AA81B76465100ACF737 /* ic_star_half@2x.png in Resources */,
 				6CAC0AA51B76465100ACF737 /* icon_spot@2x.png in Resources */,
+				6C8A298D1B7CC252009D858D /* register_button@2x.png in Resources */,
 				6CAC0AB61B76465100ACF737 /* movie.png in Resources */,
 				6CAC0AAE1B76465100ACF737 /* btn_nav_collection@2x.png in Resources */,
 				6C8D25E31B720C3E00558CA7 /* activitylist.txt in Resources */,
@@ -694,6 +742,8 @@
 				6CAC0AB51B76465100ACF737 /* cinema.png in Resources */,
 				6CAC0A9B1B76465100ACF737 /* icon_spot_blue@2x.png in Resources */,
 				6CAC0AAB1B76465100ACF737 /* bg_nav@2x.png in Resources */,
+				6C8A298C1B7CC252009D858D /* register_button.png in Resources */,
+				6C8A298A1B7CC252009D858D /* login_button.png in Resources */,
 				6CAC0A9A1B76465100ACF737 /* icon_spot_blue.png in Resources */,
 				6CAC0AAA1B76465100ACF737 /* bg_nav.png in Resources */,
 				6CAC0AB01B76465100ACF737 /* btn_nav_share.png in Resources */,
@@ -724,6 +774,7 @@
 				6C8D25D61B71FA1000558CA7 /* MineListViewController.m in Sources */,
 				6C8D25E61B720C8700558CA7 /* Activity.m in Sources */,
 				6CAC0AC11B76472D00ACF737 /* ActivityInfoView.m in Sources */,
+				6C8A29951B7CF0DB009D858D /* MBProgressHUD.m in Sources */,
 				6CAC0A601B7644B200ACF737 /* ActivityListCell.m in Sources */,
 				6C8D25D01B71F9D400558CA7 /* CinemaListViewController.m in Sources */,
 				6C033A651B77B8070098718D /* ImageDownLoader.m in Sources */,
@@ -731,6 +782,7 @@
 				6C8D25D31B71F9EC00558CA7 /* MovieListViewController.m in Sources */,
 				6C8D25981B71F72F00558CA7 /* main.m in Sources */,
 				6C98957E1B7651100022AB01 /* LTView.m in Sources */,
+				6C8A29901B7CC5CA009D858D /* ActivityDetailView.m in Sources */,
 				6C98957F1B7651100022AB01 /* UIView+Additions.m in Sources */,
 				6C8D25D91B7201E100558CA7 /* ActivityDetailViewController.m in Sources */,
 				6C98959E1B7663A80022AB01 /* ActivityCountView.m in Sources */,

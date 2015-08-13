@@ -36,6 +36,17 @@
     ActivityListViewController *activityVC = [[ActivityListViewController alloc] init];
     activityVC.title = @"活动";
     UINavigationController *activityNC = [[UINavigationController alloc] initWithRootViewController:activityVC];
+    [activityNC.navigationBar  setBackgroundImage:[UIImage imageNamed:@"bg_nav"] forBarMetrics:(UIBarMetricsDefault)];
+    
+    // *** 自定义导航条
+    // 系统默认的 导航条样式有四种，一般Women都使用自定义的导航条。
+    // ***给navigationBar 设置背景图 setBackgroundImage:[UIImage imageNamed:] for
+    // forBarMetrics:导航条尺寸
+    // UIBarMetricsDefault  默认的，
+    // UIBarMetricsDefaultPrompt 透明的
+    // UIBarMetricsCompact  透明导航条
+    // UIBarMetricsCompactPrompt 透明的
+    
     
     
     // 电影列表

@@ -16,7 +16,7 @@ static UserInfo *userInfo = nil;
 {
     @synchronized(self)
     {
-        if (self == nil) {
+        if (userInfo == nil) {
             userInfo = [[UserInfo alloc] init];
         }
         return userInfo;

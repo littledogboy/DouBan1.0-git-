@@ -11,10 +11,15 @@
 #import "Activity.h"
 #import "ActivityListCell.h"
 
+#import "MBProgressHUD.h" // 导入第三方 进度块 类
+
 @interface ActivityListViewController () <NSURLConnectionDataDelegate, NSURLConnectionDelegate>
 
 @property (nonatomic,retain) NSMutableData *data;
 @property (nonatomic,retain) NSMutableArray *activityArray;
+
+// 进度 视图 设置为属性
+@property (nonatomic,retain) MBProgressHUD *progressHUD;
 
 @end
 
@@ -58,7 +63,8 @@
         [activity release];
     }
     [self.tableView reloadData];
-
+    // 菊花转消失。
+    [_progressHUD hide:YES];
 
 }
 
@@ -115,11 +121,21 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+#pragma mark- 活动列表网络请求
+    // 活动列表网络请求
     NSURL *acitvityListURL = [NSURL URLWithString:@"http://project.lanou3g.com/teacher/yihuiyun/lanouproject/activitylist.php"];
 
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:acitvityListURL cachePolicy:0 timeoutInterval:10];
     
     [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    
+#pragma mark- 设置loading视图
+    // 主要是为了把 center 给 hub，让hub在中间。
+    self.progressHUD = [[[MBProgressHUD alloc] initWithView:self.view] autorelease];
+    _progressHUD.mode = MBProgressHUDModeIndeterminate; // 菊花转默认的。
+    [self.view addSubview:_progressHUD];
+    // 显示出来
+    [_progressHUD show:YES];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;

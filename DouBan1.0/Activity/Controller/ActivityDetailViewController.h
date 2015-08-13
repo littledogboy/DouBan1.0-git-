@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class Activity; // 详情页面控制器需要接受前面传递过来的一个
 
 @interface ActivityDetailViewController : UIViewController
 
