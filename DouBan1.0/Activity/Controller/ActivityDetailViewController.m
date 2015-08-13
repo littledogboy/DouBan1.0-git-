@@ -21,11 +21,11 @@
     self.title = @"活动详情";
     self.view.backgroundColor = [UIColor magentaColor];
     // **左返回按钮
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"btn_nav_back"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] style:(UIBarButtonItemStylePlain) target:self action:@selector(backBarButtonAction:)];
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"btn_nav_back"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)]  style:(UIBarButtonItemStylePlain) target:self action:@selector(backBarButtonAction:)];
     self.navigationItem.leftBarButtonItem = backButtonItem;
     
-    // 在iOS8 系统下，UITabbar上的item自定义背景色和图片，
-    // 初始值 红色无效果 系统默认颜色-蓝色
+    // 在iOS8 系统下，UITabbar UINavigationBar 上的item自定义背景色和图片，
+    // 初始值 红色无效果 系统默认颜色-蓝色,如果不设置图片的渲染模式会调用自动渲染。
     // 声明这张图片用原图(别渲染),
     // UIImage的渲染模式 为iOS7 新增的，默认为 UIImageRenderingModeAutomatic
     // imageWithRenderingMode:
