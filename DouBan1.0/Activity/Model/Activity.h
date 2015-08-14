@@ -10,7 +10,9 @@
 #import <UIKit/UIKit.h>
 #import "ImageDownLoader.h"
 
-@interface Activity : NSObject <ImageDownLoaderDelegate>
+@interface Activity : NSObject <ImageDownLoaderDelegate, NSCoding>
+
+@property (nonatomic,retain) NSString *ID;
 
 @property (nonatomic,retain) NSString *title; // 标题
 @property (nonatomic,retain) NSString *begin_time; // 小技巧，集体改值。
@@ -22,4 +24,14 @@
 @property (nonatomic,retain) NSString *imageUrl; // 图片链接
 @property (nonatomic,retain)  UIImage *activityImage; // 图片对象
 
+@property (nonatomic,retain) NSString * content; // 活动内容
+@property (nonatomic,retain) NSString * ownerName; // 主办方
+
+@property (nonatomic,retain) NSString * imageFilePath;//图像在沙盒中的路径
+@property (nonatomic,assign) BOOL       isDownloading;//图像下载状态
+
+@property (nonatomic,assign) BOOL       isFavorite;//是否收藏
+
+//开始下载图像
+- (void)loadImage;
 @end

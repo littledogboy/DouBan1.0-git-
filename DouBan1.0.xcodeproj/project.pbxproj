@@ -16,6 +16,7 @@
 		6C8A29951B7CF0DB009D858D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8A29941B7CF0DB009D858D /* MBProgressHUD.m */; };
 		6C8A29981B7D77D2009D858D /* DatabaseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8A29971B7D77D2009D858D /* DatabaseHandler.m */; };
 		6C8A299A1B7D7987009D858D /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C8A29991B7D7987009D858D /* libsqlite3.0.dylib */; };
+		6C8A299D1B7D9C53009D858D /* Movie.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8A299C1B7D9C53009D858D /* Movie.m */; };
 		6C8D25981B71F72F00558CA7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8D25971B71F72F00558CA7 /* main.m */; };
 		6C8D259B1B71F72F00558CA7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8D259A1B71F72F00558CA7 /* AppDelegate.m */; };
 		6C8D259D1B71F72F00558CA7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C8D259C1B71F72F00558CA7 /* Images.xcassets */; };
@@ -105,6 +106,8 @@
 		6C8A29961B7D77D2009D858D /* DatabaseHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseHandler.h; sourceTree = "<group>"; };
 		6C8A29971B7D77D2009D858D /* DatabaseHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseHandler.m; sourceTree = "<group>"; };
 		6C8A29991B7D7987009D858D /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		6C8A299B1B7D9C53009D858D /* Movie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Movie.h; sourceTree = "<group>"; };
+		6C8A299C1B7D9C53009D858D /* Movie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Movie.m; sourceTree = "<group>"; };
 		6C8D25921B71F72F00558CA7 /* DouBan1.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DouBan1.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C8D25961B71F72F00558CA7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6C8D25971B71F72F00558CA7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -481,6 +484,8 @@
 		6C8D25C91B71F8D800558CA7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				6C8A299B1B7D9C53009D858D /* Movie.h */,
+				6C8A299C1B7D9C53009D858D /* Movie.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -785,6 +790,7 @@
 				6CAC0AC11B76472D00ACF737 /* ActivityInfoView.m in Sources */,
 				6C8A29951B7CF0DB009D858D /* MBProgressHUD.m in Sources */,
 				6CAC0A601B7644B200ACF737 /* ActivityListCell.m in Sources */,
+				6C8A299D1B7D9C53009D858D /* Movie.m in Sources */,
 				6C8D25D01B71F9D400558CA7 /* CinemaListViewController.m in Sources */,
 				6C033A651B77B8070098718D /* ImageDownLoader.m in Sources */,
 				6C8D259B1B71F72F00558CA7 /* AppDelegate.m in Sources */,

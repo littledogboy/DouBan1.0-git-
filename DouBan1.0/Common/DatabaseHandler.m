@@ -9,6 +9,7 @@
 
 
 #import "DatabaseHandler.h"
+#import "Activity.h"
 
 #define kDatabaseName @"DouBan.sqlite" // 数据库名
 
@@ -39,10 +40,13 @@ static sqlite3 *db = nil;
             // ActivityInfo ,  MovieInfo
             
             //| ID      | title     | imageUrl     |  data     |
-            // interger   text         text            blob
+            // text   text         text            blob
+            // primary key
+            // not null
             
             // 创建数据库表sql语句， 若已经创建过则不会再创建  数据库自己会判断。table studentInfo already exists
-            NSString *createTableSql = @"CREATE TABLE ActivityInfo (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title TEXT, imageUrl TEXT,data BLOB); CREATE TABLE MovieInfo(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title TEXT, imageUrl TEXT, data BLOB)";
+            // AUTOINCREMENT
+            NSString *createTableSql = @"CREATE TABLE ActivityInfo (ID TEXT PRIMARY KEY  NOT NULL, title TEXT, imageUrl TEXT,data BLOB); CREATE TABLE MovieInfo(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title TEXT, imageUrl TEXT, data BLOB)";
             // 敲出来之后 ：  sqliteManager 用数据库软件验证一下
             
             // 执行sql 语句 , 可以使用比较便捷的方式 sqlite_exec(); // execute
@@ -75,6 +79,79 @@ static sqlite3 *db = nil;
     }
     db = nil;
 }
+
+
+#pragma mark--- Activity 数据库操作
+// 添加 某个活动
++ (BOOL)insertNewActivity:(Activity *)activity
+{
+    BOOL isSuccess = NO;
+    // 1   2 3 4
+    // 1.
+    sqlite3 *db =  [self open];
+    // 2. stmt
+    sqlite3_stmt *stmt = nil;
+    // 3. sql
+    NSString *sqlString = [NSString stringWithFormat:@"insert into ActivityInfo values('%@','%@','%@',?)", activity.ID, activity.title, activity.imageUrl];
+    NSLog(@"%@", sqlString);
+    // 4. prepare
+    int result = sqlite3_prepare_v2(db, sqlString.UTF8String, -1, &stmt, nil);
+    // judge
+    if (result == SQLITE_OK) {
+        // .bind
+        
+        // 5. 归档key 标识
+        NSString *achiverKey = [NSString stringWithFormat:@"activity_%@",activity.ID];
+        // 对对象进行归档 转化为data
+        
+        NSMutableData * data = [NSMutableData data];
+        
+        NSKeyedArchiver * archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+        
+        [archiver encodeObject:activity forKey:achiverKey];
+        [archiver finishEncoding];
+        [archiver release];
+        
+        // 6. bind
+        // 赋值的？对象为 blob 二进制 byte类型。
+        sqlite3_bind_blob(stmt, 1, [data bytes], (int)[data length], nil);
+        
+        // 7. step
+        sqlite3_step(stmt);
+        isSuccess = YES;
+    }
+    // 8.
+    sqlite3_finalize(stmt);
+    
+    return isSuccess;
+}
+
+// 删除 某个活动
+//+ (BOOL)deleteActivityWithID:(NSInteger)ID;
++ (BOOL)deleteActivity:(Activity *)activity
+{
+    return YES;
+}
+
+
+// 查询 某个活动
+//+ (Activity *)selectActivityWithID:(NSInteger)ID
+//{
+//    
+//}
+//
+//// 查询 所有活动
+//+ (NSArray *)selectAllActivitys
+//{
+//    
+//}
+
+// 判断活动是否被收藏
++ (BOOL)isFavoriteActivityWithID:(NSInteger)ID
+{
+    return YES;
+}
+
 
 
 /*

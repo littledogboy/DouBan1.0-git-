@@ -144,9 +144,10 @@
         // 参加
         _joinView.count = activity.participant_count;
         
-        
+        //  此为活动单元格 如果活动图片为空，下载图片，调用activity的loadView方法。
         if (activity.activityImage  == nil) {
             _activityImage.image = [UIImage imageNamed:@"picholder"];
+//            [_activity loadImage];
         } else {
             _activityImage.image = activity.activityImage;
             

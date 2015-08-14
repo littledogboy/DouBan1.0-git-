@@ -13,13 +13,13 @@
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
     self.recevieData = [NSMutableData data];
-    NSLog(@"%s %d", __FUNCTION__, __LINE__);
+    NSLog(@"%s %d %@", __FUNCTION__, __LINE__, @"图片下载接收到网络回应");
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     [self.recevieData appendData:data];
-    NSLog(@"%s %d", __FUNCTION__, __LINE__);
+//    NSLog(@"%s %d", __FUNCTION__, __LINE__);
 }
 
 
@@ -50,13 +50,33 @@
         self.tag = tag;
         
         NSURL *url = [NSURL URLWithString:urlString];
-        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+//        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
         // 1. 内部连接方式 代理
         // 2. block
-        [[[NSURLConnection alloc] initWithRequest:request delegate:self] autorelease];
+        // 1. 代理 代理代理能够实现 滑动停止才更新数据。
+//        [[[NSURLConnection alloc] initWithRequest:request delegate:self] autorelease];
+        [self startDownload];
+        
+        // 2. block 而用block 则可以边滑动边更新数据。
+        
         
     }
     return self;
 }
+
+- (void)startDownload
+{
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.urlString]];
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        
+        UIImage *image = [UIImage imageWithData:data];
+        
+        if ([_delegate respondsToSelector:@selector(imageDownLoader:disFinshLoadImage:)]) {
+            [_delegate imageDownLoader:self disFinshLoadImage:image];
+        }
+        
+    }];
+}
+
 
 @end

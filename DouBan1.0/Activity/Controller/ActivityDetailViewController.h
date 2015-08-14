@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-@class Activity; // 详情页面控制器需要接受前面传递过来的一个
+@class Activity; // 详情页面控制器需要接受前面传递过来的一个 model
 
 @interface ActivityDetailViewController : UIViewController
+
+@property (nonatomic,retain) Activity *activity;
 
 @end

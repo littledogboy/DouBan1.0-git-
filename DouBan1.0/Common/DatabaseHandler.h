@@ -15,6 +15,9 @@
 #import <UIKit/UIKit.h>
 #import <sqlite3.h>
 
+@class Activity;
+@class Movie;
+
 @interface DatabaseHandler : UIView
 
 // 打开数据库
@@ -22,5 +25,45 @@
 
 // 关闭数据库
 - (void)close;
+
+#pragma mark--- Activity 数据库操作
+// 添加 某个活动
++ (BOOL)insertNewActivity:(Activity *)activity;
+
+// 删除 某个活动
+//+ (BOOL)deleteActivityWithID:(NSInteger)ID;
++ (BOOL)deleteActivity:(Activity *)activity;
+
+
+// 查询 某个活动
++ (Activity *)selectActivityWithID:(NSInteger)ID;
+
+// 查询 所有活动
++ (NSArray *)selectAllActivitys;
+
+// 判断活动是否被收藏
++ (BOOL)isFavoriteActivityWithID:(NSInteger)ID;
+
+
+#pragma Movie--- Movie 数据库操作
+// 添加 某个电影
++ (BOOL)insertNewMovie:(Movie *)movie;
+
+// 删除 某个电影
+//+ (BOOL)deleteActivityWithID:(NSInteger)ID;
++ (BOOL)deleteMovie:(Movie *)movie;
+
+
+// 查询 某个电影
++ (Activity *)selectMovieWithID:(NSInteger)ID;
+
+// 查询 所有电影
++ (NSArray *)selectAllMovies;
+
+// 判断电影是否被收藏
++ (BOOL)isFavoriteMovieWithID:(NSInteger)ID;
+
+
+
 
 @end

@@ -9,12 +9,72 @@
 #import "ActivityDetailViewController.h"
 #import "UserInfo.h"
 #import "LoginViewController.h"
+#import "ActivityDetailView.h" // 导入活动详情视图
+#import "Activity.h"
 
 @interface ActivityDetailViewController ()
+
+@property (nonatomic, retain) ActivityDetailView *detailView; // 活动详情视图
 
 @end
 
 @implementation ActivityDetailViewController
+- (void)dealloc
+{
+    [self.activity  release];
+    [self.detailView release];
+    [super dealloc];
+}
+- (void)loadView
+{
+    self.detailView = [[[ActivityDetailView alloc] initWithFrame:[UIScreen mainScreen].bounds] autorelease];
+    self.view = _detailView; // 指定 controller 视图view。
+}
+
+#pragma mark -----显示数据-----
+- (void)p_setupData
+{
+    
+    //根据活动内容调整滚动视图的contentSize
+    [_detailView adjustSubviewsWithContent:_activity.content];
+    
+    //活动图片
+    
+    if (_activity.activityImage == nil) {
+        //没有图像，下载图像
+        _detailView.activityImageView.image = [UIImage imageNamed:@"picholder"];
+        [_activity loadImage];
+        
+        [_activity addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:nil];
+    }else{
+        _detailView.activityImageView.image = _activity.activityImage;
+    }
+    
+    
+    //标题
+    _detailView.titleLabel.text = _activity.title;
+    
+    //时间
+    NSString * startTime = [_activity.begin_time substringWithRange:NSMakeRange(5, 11)];
+    NSString * endTime = [_activity.end_time substringWithRange:NSMakeRange(5, 11)];
+    _detailView.timeLabel.text = [NSString stringWithFormat:@"%@ -- %@",startTime,endTime];
+    
+    //主办方
+    _detailView.ownerLabel.text = _activity.ownerName;
+    
+    //类型
+    _detailView.categoryLabel.text = [NSString stringWithFormat:@"类型：%@",_activity.category_name];
+    
+    //地址
+    _detailView.addressLabel.text = _activity.address;
+    [_detailView.addressLabel sizeToFit];//label适应文本高度
+    
+    //内容
+    _detailView.contextLabel.text = _activity.content;
+    
+}
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];

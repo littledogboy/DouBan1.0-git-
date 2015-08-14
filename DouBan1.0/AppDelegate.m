@@ -83,6 +83,8 @@
     
     [mineVC release];
     [mineNC release];
+    
+    NSLog(@"%@", NSHomeDirectory());
 
     return YES;
 }

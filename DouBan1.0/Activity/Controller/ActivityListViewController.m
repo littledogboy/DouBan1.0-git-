@@ -182,9 +182,12 @@
     cell.layer.rasterizationScale = [UIScreen mainScreen].scale;
     
     Activity *activity = self.activityArray[indexPath.row];
+    cell.activity = activity;
 #pragma mark------ KVO 观察者设计模式------
     //1. 注册观察者 给activity 添加观察者， 指定被观察属性
-    if (activity.activityImage == nil) {
+    if (activity.isDownloading == NO && activity.activityImage == nil) {
+        [activity loadImage];
+
         // NSKeyValueObservingOptionNew 变为新的对象
         // 此时self 为 Controller 观察者为 C
         // context 传递过去数据
@@ -193,7 +196,6 @@
         // arc 下需要桥接 (__bridge_retained  void *)(indexPath)
     }
     
-    cell.activity = activity;
     return cell;
 }
 
@@ -222,7 +224,7 @@
         cell.activityImage.image = image;
         
         // 更新此index
-        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:(UITableViewRowAnimationAutomatic)];
+//        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:(UITableViewRowAnimationAutomatic)];
         
     }
     // 为了 防止崩溃，上面retain 下面release。
