@@ -14,6 +14,8 @@
 		6C8A298D1B7CC252009D858D /* register_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C8A29891B7CC252009D858D /* register_button@2x.png */; };
 		6C8A29901B7CC5CA009D858D /* ActivityDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8A298F1B7CC5CA009D858D /* ActivityDetailView.m */; };
 		6C8A29951B7CF0DB009D858D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8A29941B7CF0DB009D858D /* MBProgressHUD.m */; };
+		6C8A29981B7D77D2009D858D /* DatabaseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8A29971B7D77D2009D858D /* DatabaseHandler.m */; };
+		6C8A299A1B7D7987009D858D /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C8A29991B7D7987009D858D /* libsqlite3.0.dylib */; };
 		6C8D25981B71F72F00558CA7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8D25971B71F72F00558CA7 /* main.m */; };
 		6C8D259B1B71F72F00558CA7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8D259A1B71F72F00558CA7 /* AppDelegate.m */; };
 		6C8D259D1B71F72F00558CA7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C8D259C1B71F72F00558CA7 /* Images.xcassets */; };
@@ -100,6 +102,9 @@
 		6C8A298F1B7CC5CA009D858D /* ActivityDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailView.m; sourceTree = "<group>"; };
 		6C8A29931B7CF0DB009D858D /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		6C8A29941B7CF0DB009D858D /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		6C8A29961B7D77D2009D858D /* DatabaseHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseHandler.h; sourceTree = "<group>"; };
+		6C8A29971B7D77D2009D858D /* DatabaseHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseHandler.m; sourceTree = "<group>"; };
+		6C8A29991B7D7987009D858D /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		6C8D25921B71F72F00558CA7 /* DouBan1.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DouBan1.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C8D25961B71F72F00558CA7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6C8D25971B71F72F00558CA7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -189,6 +194,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C8A299A1B7D7987009D858D /* libsqlite3.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,6 +239,7 @@
 		6C8D25891B71F72F00558CA7 = {
 			isa = PBXGroup;
 			children = (
+				6C8A29991B7D7987009D858D /* libsqlite3.0.dylib */,
 				6C8D25941B71F72F00558CA7 /* DouBan1.0 */,
 				6C8D25A81B71F72F00558CA7 /* DouBan1.0Tests */,
 				6C8D25931B71F72F00558CA7 /* Products */,
@@ -380,6 +387,8 @@
 			children = (
 				6C033A631B77B8070098718D /* ImageDownLoader.h */,
 				6C033A641B77B8070098718D /* ImageDownLoader.m */,
+				6C8A29961B7D77D2009D858D /* DatabaseHandler.h */,
+				6C8A29971B7D77D2009D858D /* DatabaseHandler.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -782,6 +791,7 @@
 				6C8D25D31B71F9EC00558CA7 /* MovieListViewController.m in Sources */,
 				6C8D25981B71F72F00558CA7 /* main.m in Sources */,
 				6C98957E1B7651100022AB01 /* LTView.m in Sources */,
+				6C8A29981B7D77D2009D858D /* DatabaseHandler.m in Sources */,
 				6C8A29901B7CC5CA009D858D /* ActivityDetailView.m in Sources */,
 				6C98957F1B7651100022AB01 /* UIView+Additions.m in Sources */,
 				6C8D25D91B7201E100558CA7 /* ActivityDetailViewController.m in Sources */,
