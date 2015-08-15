@@ -10,6 +10,11 @@
 #import "LoginView.h"
 #import "RegistViewController.h"
 
+#import "FileHandler.h"
+#import "LTView.h"
+#import "UserInfo.h"
+#import "UserInfo.h"
+
 @interface LoginViewController ()
 
 @property (nonatomic,retain) LoginView *loginView;
@@ -18,6 +23,8 @@
 @end
 
 @implementation LoginViewController
+
+
 - (void)dealloc
 {
     [_loginView release];
@@ -25,11 +32,13 @@
     [super dealloc];
 }
 
+
 - (void)loadView
 {
     self.loginView = [[[LoginView alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     self.view = _loginView;
 }
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -49,11 +58,13 @@
     // Do any additional setup after loading the view.
 }
 
+
 // 左导航事件
 - (void)didClickBackButtonItemAction:(UIBarButtonItem *)buttonItem
 {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
+
 
 // 点击注册按钮
 - (void)didClickRegistButtonAction:(UIButton *)button
@@ -64,14 +75,43 @@
     [registVC release];
 }
 
-// 点击登录按钮， 触发block 执行回掉，添加数据到数据库
 
-- (void)success:(UIBarButtonItem *)buttonItem
+// 点击登录按钮， 触发block 执行回掉，添加数据到数据库
+- (void)didClickLoginButtonAction:(UIBarButtonItem *)buttonItem
 {
-    __block typeof(self) blockSelf = self;
-    blockSelf.block(@"123");
     
+    //从沙盒中获取用户名和密码
+    NSString * username = [[FileHandler shareInstance] username];
+    NSString * password = [[FileHandler shareInstance] password];
+    
+    //验证登陆
+    if ([[_loginView.usernameView inputFieldText] isEqualToString:username] && [[_loginView.passwordView inputFieldText] isEqualToString:password]) {
+        
+        //验证登陆成功，设置用户为登陆状态
+        [UserInfo sharedUserInfo].isLogin = YES;
+        [[FileHandler shareInstance] setloginState:YES];
+        [[FileHandler shareInstance] synchronize];
+        
+        
+        //登陆成功后回调，同时将用户信息回传
+        User * user = [[FileHandler shareInstance] user];
+        self.block(user);
+        
+        //推出登陆页面
+        [self dismissViewControllerAnimated:YES completion:nil];
+        
+        
+    }else{
+        
+        //登陆失败，显示提示框，停留在登陆页面
+        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"用户名或密码错误！" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确认", nil];
+        [alertView show];
+        [alertView release];
+        
+    }
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

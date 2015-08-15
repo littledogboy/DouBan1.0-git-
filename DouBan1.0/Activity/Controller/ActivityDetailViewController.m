@@ -131,45 +131,57 @@
         
         // 定义登录成功后回调的block
         __block typeof(self) blockSelf = self;
+//        __block ActivityDetailViewController *detailVC = self;
         loginVC.block = ^(id userInfo){
-            
 #pragma mark- 回调block 到数据库查询 判断有没有被收藏过
             // 登录成功后，自动收藏活动
-            // 1.判断 根据该活动id查询有没有被收藏过，
-            BOOL isFavorite = [DatabaseHandler isFavoriteActivityWithID:blockSelf.activity.ID];
-            if (isFavorite) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"该活动已经被收藏过了" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-                [alertView show];
-                [alertView release];
-            } else
-            {
-                // 收藏标识 yes
-                blockSelf.activity.isFavorite = YES; // 被收藏
-                
-                // 插入数据库
-                [DatabaseHandler insertNewActivity:blockSelf.activity];
-                
-                // 提示
-                //显示alertView提示用户
-                UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"收藏成功" delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
-                [alertView show];
-                [alertView release];
-                
-                // 0.3 秒后alertView 消失，使用了 perform  afterDelay
-                [blockSelf performSelector:@selector(removeAlertView:) withObject:alertView afterDelay:0.3];
-
-                
-            }
+            [blockSelf favoriteActivity]; // 防止循环引用
             
         };
-        
         UINavigationController *navC = [[UINavigationController alloc] initWithRootViewController:loginVC];
         [self.navigationController presentViewController:navC animated:YES completion:nil];
         
         [loginVC release];
         [navC release];
         
+        
+        
+    } else{ // 用户已经登录过了 直接收藏。 因此我们把收藏写成一个方法封装起来
+        
+        [self favoriteActivity];
     }
+}
+
+// 收藏活动
+- (void)favoriteActivity
+{
+    // 1.判断 根据该活动id查询有没有被收藏过，
+    BOOL isFavorite = [DatabaseHandler isFavoriteActivityWithID:_activity.ID];
+    
+    if (isFavorite) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"该活动已经被收藏过了" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alertView show];
+        [alertView release];
+        return ; // 方法结束
+        
+        
+    } else {
+        // 收藏标识 yes
+        _activity.isFavorite = YES; // 被收藏
+        
+        // 插入数据库
+        [DatabaseHandler insertNewActivity:_activity];
+        
+        // 提示
+        //显示alertView提示用户
+        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"收藏成功" delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
+        [alertView show];
+        [alertView release];
+        
+        // 0.3 秒后alertView 消失，使用了 perform  afterDelay
+        [self performSelector:@selector(removeAlertView:) withObject:alertView afterDelay:0.3];
+    }
+
 }
 
 // 移除提示视图

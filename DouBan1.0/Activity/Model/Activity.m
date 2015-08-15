@@ -112,7 +112,10 @@
 
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key
 {
-    //
+    // ID  : id
+    if ([key isEqualToString:@"id"]) {
+        self.ID = value;
+    }
 }
 
 // 图片沙盒路径

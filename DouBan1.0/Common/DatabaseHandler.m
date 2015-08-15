@@ -92,6 +92,7 @@ static sqlite3 *db = nil;
     sqlite3_stmt *stmt = nil;
     // 3. sql
     NSString *sqlString = [NSString stringWithFormat:@"insert into ActivityInfo values('%@','%@','%@',?)", activity.ID, activity.title, activity.imageUrl];
+    NSLog(@"活动的ID为 %@", activity.ID);
     NSLog(@"%@", sqlString);
     // 4. prepare
     int result = sqlite3_prepare_v2(db, sqlString.UTF8String, -1, &stmt, nil);
@@ -101,6 +102,7 @@ static sqlite3 *db = nil;
         
         // 5. 归档key 标识
         NSString *achiverKey = [NSString stringWithFormat:@"%@%@", kActivityArchiverKey,activity.ID];
+        NSLog(@"+++%@",achiverKey);
         // 对对象进行归档 转化为data
         
         NSMutableData * data = [NSMutableData data];
@@ -156,7 +158,9 @@ static sqlite3 *db = nil;
             
             // 7. 反归档
             NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-            activity =  [unarchiver decodeObjectForKey:kActivityArchiverKey];
+            NSString *key = [NSString stringWithFormat:@"%@%@", kActivityArchiverKey,ID];
+            NSLog(@"---%@", key);
+            activity =  [unarchiver decodeObjectForKey:key];
             [unarchiver finishDecoding];
             [unarchiver release];
         }
@@ -166,9 +170,11 @@ static sqlite3 *db = nil;
     
     if (activity != nil) {
         NSLog(@"从数据库中取数据反归档成功");
+        NSLog(@"%@", activity);
         return activity;
     }  else{
         NSLog(@"取数据出错");
+        NSLog(@"%@", activity);
         return nil;
     }
 }
@@ -182,6 +188,7 @@ static sqlite3 *db = nil;
 // 判断活动是否被收藏
 + (BOOL)isFavoriteActivityWithID:(NSString *)ID
 {
+    NSLog(@"%@",ID);
     Activity *activity = [self selectActivityWithID:ID];
     if (activity != nil) {
         return YES;
