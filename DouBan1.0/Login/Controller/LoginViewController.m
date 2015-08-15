@@ -7,21 +7,64 @@
 //
 
 #import "LoginViewController.h"
+#import "LoginView.h"
+#import "RegistViewController.h"
 
 @interface LoginViewController ()
+
+@property (nonatomic,retain) LoginView *loginView;
+
 
 @end
 
 @implementation LoginViewController
+- (void)dealloc
+{
+    [_loginView release];
+    Block_release(_block);
+    [super dealloc];
+}
+
+- (void)loadView
+{
+    self.loginView = [[[LoginView alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+    self.view = _loginView;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"登录";
-    self.view.backgroundColor = [UIColor redColor];
+
+    //导航栏的返回按钮
+    UIBarButtonItem * backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(didClickBackButtonItemAction:)];
+    self.navigationItem.leftBarButtonItem = backButtonItem;
+    [backButtonItem release];
     
-    self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:(UIBarButtonSystemItemBookmarks) target:self action:@selector(success:)] autorelease];
+    //登陆页面的登陆按钮添加响应方法
+    [_loginView.loginButton addTarget:self action:@selector(didClickLoginButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    //登陆页面的注册按钮添加响应方法
+    [_loginView.registButton addTarget:self action:@selector(didClickRegistButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    
     // Do any additional setup after loading the view.
 }
+
+// 左导航事件
+- (void)didClickBackButtonItemAction:(UIBarButtonItem *)buttonItem
+{
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+
+// 点击注册按钮
+- (void)didClickRegistButtonAction:(UIButton *)button
+{
+    //进入注册页面
+    RegistViewController * registVC = [[RegistViewController alloc] init];
+    [self.navigationController pushViewController:registVC animated:YES];
+    [registVC release];
+}
+
+// 点击登录按钮， 触发block 执行回掉，添加数据到数据库
 
 - (void)success:(UIBarButtonItem *)buttonItem
 {

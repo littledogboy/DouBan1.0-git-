@@ -34,12 +34,14 @@
 - (void)p_setupSubviews
 {
     //scrollView
-    _bottomScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, self.bounds.size.height-49)];
+    CGFloat totalWidth = [[UIScreen mainScreen] bounds].size.width;
+    _bottomScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, totalWidth, self.bounds.size.height-49)];
     //    _bottomScrollView.backgroundColor = [UIColor cyanColor];
     [self addSubview:_bottomScrollView];
     
     //标题
-    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, 280, 40)];
+    CGFloat titleWidth = totalWidth - 2 * 20;
+    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, titleWidth, 40)];
     _titleLabel.numberOfLines = 0;
     _titleLabel.font = [UIFont systemFontOfSize:16.0];
     [_bottomScrollView addSubview:_titleLabel];
@@ -95,15 +97,17 @@
     
     
     //活动介绍
-    UILabel * introduceLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 206, 280, 20)];
+    UILabel * introduceLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 206, titleWidth, 20)];
     introduceLabel.text = @"活动介绍";
-    introduceLabel.font = [UIFont boldSystemFontOfSize:16.0];
+    introduceLabel.font = [UIFont boldSystemFontOfSize:18.0];
     [_bottomScrollView addSubview:introduceLabel];
     [introduceLabel release];
     
     //活动内容
-    _contextLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 236, 280, 0)];
+    _contextLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 236, titleWidth, 0)];
     _contextLabel.font = [UIFont systemFontOfSize:12.0];
+    // 设置换行模式
+    _contextLabel.lineBreakMode = NSLineBreakByTruncatingTail; // 设置换行模式
     _contextLabel.numberOfLines = 0;
     [_bottomScrollView addSubview:_contextLabel];
     
@@ -126,7 +130,7 @@
 - (void)adjustSubviewsWithContent:(NSString *)content
 {
     //计算活动内容的高度
-    CGRect contentRect = [content boundingRectWithSize:CGSizeMake(280, 1000000) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0]} context:nil];
+    CGRect contentRect = [content boundingRectWithSize:CGSizeMake(335, 1000000) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0]} context:nil];
     
     CGFloat height = TopHeight+contentRect.size.height+30;
     

@@ -12,6 +12,8 @@
 #import "ActivityDetailView.h" // 导入活动详情视图
 #import "Activity.h"
 
+#import "DatabaseHandler.h"
+
 @interface ActivityDetailViewController ()
 
 @property (nonatomic, retain) ActivityDetailView *detailView; // 活动详情视图
@@ -27,7 +29,7 @@
 }
 - (void)loadView
 {
-    self.detailView = [[[ActivityDetailView alloc] initWithFrame:[UIScreen mainScreen].bounds] autorelease];
+    self.detailView = [[[ActivityDetailView alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     self.view = _detailView; // 指定 controller 视图view。
 }
 
@@ -79,7 +81,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"活动详情";
-    self.view.backgroundColor = [UIColor magentaColor];
+//    self.view.backgroundColor = [UIColor magentaColor];
     // **左返回按钮
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"btn_nav_back"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)]  style:(UIBarButtonItemStylePlain) target:self action:@selector(backBarButtonAction:)];
     self.navigationItem.leftBarButtonItem = backButtonItem;
@@ -98,8 +100,11 @@
     
     
     
-    //
-    self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:(UIBarButtonSystemItemAdd) target:self action:@selector(collectActivity:)] autorelease];
+    // 右收藏按钮
+    self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"btn_nav_share"]  imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] style:(UIBarButtonItemStylePlain) target:self action:@selector(favoriteBarButtonAction:)] autorelease];
+    
+    // 加载数据
+    [self p_setupData];
     
     // Do any additional setup after loading the view.
 }
@@ -111,13 +116,51 @@
 
 
 #pragma mark----- 收藏按钮执行方法
-- (void)collectActivity:(UIBarButtonItem *)buttonItem
+- (void)favoriteBarButtonAction:(UIBarButtonItem *)buttonItem
 {
+    //  根据单例 UserInfo  判断用户登录状态。
     UserInfo *userInfo = [UserInfo sharedUserInfo];
-    if (NO == userInfo.isLogin) {
+    
+    // 没有登录，让用户登录， 登录成功后执行回调函数
+    
+    // 登录完成之后，希望，block进行的操作，内部为空，外界赋值，实现了 低耦合的特性。
+    // 外界给的block是什么操作， 内部就进行什么操作。
+    // 我们要登录完成之后，给数据库添加数据，
+    if (NO == userInfo.isLogin) { //
         LoginViewController *loginVC = [[LoginViewController alloc] init];
-        loginVC.block = ^(NSString *str){
-            NSLog(@"%@", str);
+        
+        // 定义登录成功后回调的block
+        __block typeof(self) blockSelf = self;
+        loginVC.block = ^(id userInfo){
+            
+#pragma mark- 回调block 到数据库查询 判断有没有被收藏过
+            // 登录成功后，自动收藏活动
+            // 1.判断 根据该活动id查询有没有被收藏过，
+            BOOL isFavorite = [DatabaseHandler isFavoriteActivityWithID:blockSelf.activity.ID];
+            if (isFavorite) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"该活动已经被收藏过了" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                [alertView show];
+                [alertView release];
+            } else
+            {
+                // 收藏标识 yes
+                blockSelf.activity.isFavorite = YES; // 被收藏
+                
+                // 插入数据库
+                [DatabaseHandler insertNewActivity:blockSelf.activity];
+                
+                // 提示
+                //显示alertView提示用户
+                UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"收藏成功" delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
+                [alertView show];
+                [alertView release];
+                
+                // 0.3 秒后alertView 消失，使用了 perform  afterDelay
+                [blockSelf performSelector:@selector(removeAlertView:) withObject:alertView afterDelay:0.3];
+
+                
+            }
+            
         };
         
         UINavigationController *navC = [[UINavigationController alloc] initWithRootViewController:loginVC];
@@ -128,6 +171,13 @@
         
     }
 }
+
+// 移除提示视图
+- (void)removeAlertView:(UIAlertView *)alertView
+{
+    [alertView dismissWithClickedButtonIndex:0 animated:YES];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -8,6 +8,9 @@
 
 #import "MineListViewController.h"
 
+#import "LoginViewController.h"
+
+
 @interface MineListViewController ()
 
 @end

@@ -36,13 +36,13 @@
 
 
 // 查询 某个活动
-+ (Activity *)selectActivityWithID:(NSInteger)ID;
++ (Activity *)selectActivityWithID:(NSString *)ID;
 
 // 查询 所有活动
 + (NSArray *)selectAllActivitys;
 
 // 判断活动是否被收藏
-+ (BOOL)isFavoriteActivityWithID:(NSInteger)ID;
++ (BOOL)isFavoriteActivityWithID:(NSString *)ID;
 
 
 #pragma Movie--- Movie 数据库操作

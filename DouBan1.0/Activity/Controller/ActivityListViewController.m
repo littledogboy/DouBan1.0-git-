@@ -239,6 +239,7 @@
 {
     // 推入活动详细页面
     ActivityDetailViewController *detailVC = [[ActivityDetailViewController alloc] init];
+    detailVC.activity = _activityArray[indexPath.row];
     // 传值
     [self.navigationController pushViewController:detailVC animated:YES];
     [detailVC release];

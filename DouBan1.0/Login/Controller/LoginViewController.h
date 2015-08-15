@@ -7,11 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+@class LoginView;
 
-typedef void (^LoginBlock) (NSString *str);
+// block 登录成功后，回调做某事。
+typedef void (^LoginBlock) (id userInfo); // 给一个泛型参数。
 
 
 @interface LoginViewController : UIViewController
+
+
 // block 属性，接受外界传递的方法。
 @property (nonatomic,copy) LoginBlock block;
 

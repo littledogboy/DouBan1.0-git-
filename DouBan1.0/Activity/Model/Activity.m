@@ -26,6 +26,57 @@
     [super dealloc];
 }
 
+#pragma mark---- NSCoding协议
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.ID forKey:@"ID"];
+    [aCoder encodeObject:self.title forKey:@"title"];
+    [aCoder encodeObject:self.begin_time forKey:@"begin_time"];
+    [aCoder encodeObject:self.end_time forKey:@"end_time"];
+    [aCoder encodeObject:self.address forKey:@"address"];
+    [aCoder encodeObject:self.category_name forKey:@"category_name"];
+    [aCoder encodeObject:self.imageUrl forKey:@"imageUrl"];
+    
+    [aCoder encodeObject:self.content forKey:@"content"];
+    [aCoder encodeObject:self.ownerName forKey:@"owerName"];
+    [aCoder encodeObject:self.wisher_count forKey:@"wisher_count"];
+    [aCoder encodeObject:self.participant_count forKey:@"participant_count"];
+    [aCoder encodeObject:self.imageFilePath forKey:@"imageFilePath"];
+    [aCoder encodeBool:self.isDownloading forKey:@"isDownloading"];
+    [aCoder encodeBool:self.isFavorite forKey:@"isFavorite"];
+    
+}
+
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super init];
+    if (self) {
+        
+        self.ID = [aDecoder decodeObjectForKey:@"ID"];
+        self.title = [aDecoder decodeObjectForKey:@"title"];
+        self.begin_time = [aDecoder decodeObjectForKey:@"begin_time"];
+        self.end_time = [aDecoder decodeObjectForKey:@"end_time"];
+        self.address = [aDecoder decodeObjectForKey:@"address"];
+        self.category_name = [aDecoder decodeObjectForKey:@"category_name"];
+        self.imageUrl = [aDecoder decodeObjectForKey:@"imageUrl"];
+        
+        self.content = [aDecoder decodeObjectForKey:@"content"];
+        self.ownerName = [aDecoder decodeObjectForKey:@"ownerName"];
+        self.wisher_count = [aDecoder decodeObjectForKey:@"wisher_count"];
+        self.participant_count = [aDecoder decodeObjectForKey:@"participant_count"];
+        self.imageFilePath = [aDecoder decodeObjectForKey:@"imageFilePath"];
+        self.isDownloading = [aDecoder decodeBoolForKey:@"isDownloading"];
+        self.isFavorite = [aDecoder decodeBoolForKey:@"isFavorite"];
+    }
+    
+    return self;
+}
+
+
+
+
+#pragma mark- KVC 赋值
 - (void)setValue:(id)value forKey:(NSString *)key
 {
     [super setValue:value forKey:key];

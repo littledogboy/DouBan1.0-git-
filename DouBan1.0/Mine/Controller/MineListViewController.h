@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MineListViewController : UITableViewController
+// 我的界面。
+@interface MineListViewController : UITableViewController<UIAlertViewDelegate>
 
 @end
