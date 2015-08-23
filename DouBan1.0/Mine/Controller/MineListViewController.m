@@ -10,6 +10,8 @@
 
 #import "LoginViewController.h"
 
+#import "ActivityFavoriteViewController.h" // 导入收藏活动列表
+
 
 @interface MineListViewController ()
 
@@ -19,6 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"我的";
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -37,24 +40,41 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1; // 一个分区
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return 3; // 行
 }
 
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    
+    static NSString *identifier = @"cell1";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (cell == nil) {
+        cell = [[[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:identifier] autorelease];
+    }
     
     // Configure the cell...
+    switch (indexPath.row) {
+        case 0:
+            cell.textLabel.text = @"我的活动";
+            break;
+        case 1:
+            cell.textLabel.text = @"我的电影";
+            break;
+        case 2:
+            cell.textLabel.text = @"我的";
+            break;
+            
+        default:
+            break;
+    }
     
     return cell;
 }
-*/
 
 /*
 // Override to support conditional editing of the table view.
@@ -89,6 +109,34 @@
     return YES;
 }
 */
+
+
+#pragma mark- Table view delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    switch (indexPath.row) {
+        case 0:
+        {
+            // 进入收藏活动页面
+            ActivityFavoriteViewController *activityFVC = [[ActivityFavoriteViewController alloc] initWithStyle:(UITableViewStylePlain)];
+            [self.navigationController pushViewController:activityFVC animated:YES];
+            [activityFVC release];
+        }
+            break;
+        case 1:
+            
+            break;
+        case 2:
+            
+            break;
+            
+        default:
+            break;
+    }
+
+}
+
 
 /*
 #pragma mark - Navigation

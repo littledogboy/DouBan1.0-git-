@@ -13,6 +13,7 @@
 
 #define kDatabaseName @"DouBan.sqlite" // 数据库名
 #define kActivityArchiverKey @"activity_"
+#define KActivityArchiverKey2(ID) [NSString stringWithFormat:@"%@%@", kActivityArchiverKey,ID]
 
 static sqlite3 *db = nil;
 
@@ -116,6 +117,8 @@ static sqlite3 *db = nil;
         // 6. bind
         // 赋值的？对象为 blob 二进制 byte类型。
         sqlite3_bind_blob(stmt, 1, [data bytes], (int)[data length], nil);
+//        sqlite3_bind_text(<#sqlite3_stmt *#>, <#int#>, <#const char *#>, <#int n#>, <#void (*)(void *)#>)
+//        sqlite3_bind_blob(stmt, 1, data.bytes, (int)[data length], nil);
         
         // 7. step
         sqlite3_step(stmt);
@@ -154,6 +157,8 @@ static sqlite3 *db = nil;
         // 5.
         if (sqlite3_step(stmt) == SQLITE_ROW) {
             // 6. dataWithBytes:blob   legth:bytes
+//            sqlite3_column_text(<#sqlite3_stmt *#>, int iCol)
+            // bytes -> oc Data
             NSData *data = [NSData dataWithBytes:sqlite3_column_blob(stmt, 0) length:sqlite3_column_bytes(stmt, 0)];
             
             // 7. 反归档
@@ -179,11 +184,44 @@ static sqlite3 *db = nil;
     }
 }
 //
+
+
 //// 查询 所有活动
-//+ (NSArray *)selectAllActivitys
-//{
-//    
-//}
++ (NSArray *)selectAllActivitys
+{
+    
+    NSMutableArray * activityArray = [NSMutableArray array];
+
+    // 1. db
+    sqlite3 *db = [self open];
+    // 2. stmt
+    sqlite3_stmt * stmt = nil;
+    // 查询 ID 和 data
+    NSString * sqlString = @"select ID,data from ActivityInfo";
+    
+    // 3. prepare_v2()
+    int result = sqlite3_prepare_v2(db, [sqlString UTF8String], -1, &stmt, NULL);
+    
+    // 4.
+    if (result == SQLITE_OK) {
+    // 5. sqlit3_step
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            // 6. 取值
+            NSString *ID = [NSString stringWithUTF8String:(const char *)sqlite3_column_text(stmt, 0)];
+            NSData *data = [NSData dataWithBytes:(const void *)sqlite3_column_blob(stmt, 1) length:sqlite3_column_bytes(stmt, 1)];
+            
+            NSString *archiverKey = KActivityArchiverKey2(ID);
+            NSLog(@"***%@", archiverKey);
+            
+            Activity* activity = (Activity *)[self unarchiVierObjectWithData:data forKey:archiverKey];
+            [activityArray addObject:activity];
+        }
+        
+    }
+    
+    sqlite3_finalize(stmt);
+    return activityArray;
+}
 
 // 判断活动是否被收藏
 + (BOOL)isFavoriteActivityWithID:(NSString *)ID
@@ -196,6 +234,21 @@ static sqlite3 *db = nil;
     return NO;
 }
 
+
+
+// 反归档，可以单独创建一个文件操作类
++ (id)unarchiVierObjectWithData:(NSData *)data forKey:(NSString *)key
+{
+    // 7. 反归档
+    NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+    
+//    NSLog(@"---%@", key);
+    
+    id object =  [unarchiver decodeObjectForKey:key];
+    [unarchiver finishDecoding];
+    [unarchiver release];
+    return object;
+}
 
 
 /*

@@ -131,6 +131,20 @@
     
 #pragma mark- 设置loading视图
     // 主要是为了把 center 给 hub，让hub在中间。
+    
+//    //  把self.view 的bounds 给了 hubView，让它 显示在中心 。
+//    self.progressHUD = [[MBProgressHUD alloc] initWithView:self.view];
+//    
+//    //
+//    _progressHUD.mode = MBProgressHUDModeIndeterminate; // activity指示器，菊花转形式。
+//    [self.view addSubview:_progressHUD];
+//    // 显示出来
+//    [_progressHUD show:YES];
+    
+    
+    
+    
+    
     self.progressHUD = [[[MBProgressHUD alloc] initWithView:self.view] autorelease];
     _progressHUD.mode = MBProgressHUDModeIndeterminate; // 菊花转默认的。
     [self.view addSubview:_progressHUD];
@@ -186,6 +200,7 @@
 #pragma mark------ KVO 观察者设计模式------
     //1. 注册观察者 给activity 添加观察者， 指定被观察属性
     if (activity.isDownloading == NO && activity.activityImage == nil) {
+        // 图片为空时，下载图片
         [activity loadImage];
 
         // NSKeyValueObservingOptionNew 变为新的对象

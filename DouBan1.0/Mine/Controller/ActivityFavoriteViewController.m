@@ -10,7 +10,7 @@
 #import "FavoriteDataHandle.h"
 #import "Activity.h"
 
-#import "ActivityDetailViewController.h"
+#import "ActivityDetailViewController.h" // 活动详情页面。
 
 @interface ActivityFavoriteViewController ()
 
@@ -34,7 +34,7 @@
     
     self.navigationItem.title = @"活动收藏";
     
-    //初始化数据源
+    // 查询所有活动
     [[FavoriteDataHandle shareInstance] setupActivityDataSource];
 
 }
@@ -51,7 +51,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [[FavoriteDataHandle shareInstance] countOfActivity];
+    NSInteger num = [[FavoriteDataHandle shareInstance] countOfActivity];
+    return num;
 }
 
 
@@ -78,6 +79,7 @@
     ActivityDetailViewController * detailVC = [[ActivityDetailViewController alloc] init];
     
     detailVC.activity = [[FavoriteDataHandle shareInstance] activityForRow:indexPath.row];
+    Activity *activity = detailVC.activity;
     
     [self.navigationController pushViewController:detailVC animated:YES];
     

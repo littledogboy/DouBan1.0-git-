@@ -121,7 +121,7 @@
 // 图片沙盒路径
 - (NSString *)imageSandboxPath:(NSString *)imageUrl
 {
-    // 图像url把/ 替换为 _
+    // 图像url把/ 替换为 _ stringByreplacing
     NSString * imageName = [imageUrl stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
     
     NSFileManager * fileManager = [NSFileManager defaultManager];
@@ -151,6 +151,34 @@
     [ImageDownLoader imageDownLoaderWithURLString:self.imageUrl delegate:self tag:10];
 }
 
+// 图片在沙盒中的路径
+- (NSString *)imageSandBoxPath:(NSString *)imageUrl
+{
+    // 沙盒路径
+    NSString *sandBoxPath = NSHomeDirectory();
+    
+    // cache路径
+    NSString *cachePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
+    
+    // 文件夹路径
+    NSString *imageDirPath = [cachePath stringByAppendingPathComponent:@"DownImage"];
+    
+    //
+    NSFileManager *fileManger = [NSFileManager defaultManager];
+    
+    // 如果图片缓存文件夹不存在创建之后再存贮。
+    if ([fileManger fileExistsAtPath:imageDirPath] == NO) {
+        [fileManger createDirectoryAtPath:imageDirPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    
+    // 图片沙盒路径 根据url  命名
+    // 注意: 如果路径名里面有/ 替换掉
+    NSString *url = [imageUrl stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+    NSString *imageSandBoxPath = [imageDirPath stringByAppendingPathComponent:url];
+    
+    return imageSandBoxPath;
+}
+
 
 #pragma mark- 图片下载代理
 - (void)imageDownLoader:(ImageDownLoader *)imageDownLoade disFinshLoadImage:(UIImage *)image
@@ -162,7 +190,11 @@
         // 图片下载下来后保存在沙盒里面
         // 沙盒路径
         NSString *imageSanboxPath = [self imageSandboxPath:self.imageUrl];
-        // 写入
+        
+        // 沙盒路径
+//        NSString *imageSanBoxPath = [self imageSandBoxPath:self.imageUrl];
+        
+        // 写入 data -> sandBox
         [UIImagePNGRepresentation(image) writeToFile:imageSanboxPath atomically:YES];
     }
 }

@@ -49,7 +49,7 @@
         self.delegate = delegate;
         self.tag = tag;
         
-        NSURL *url = [NSURL URLWithString:urlString];
+//        NSURL *url = [NSURL URLWithString:urlString];
 //        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
         // 1. 内部连接方式 代理
         // 2. block

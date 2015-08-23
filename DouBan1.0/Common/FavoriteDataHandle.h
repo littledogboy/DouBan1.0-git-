@@ -15,7 +15,7 @@
 + (FavoriteDataHandle *)shareInstance;
 
 #pragma mark ------Activity活动 数据源-------
-//从数据库读取“活动”的数据源
+//从数据库读取所有“活动”
 - (void)setupActivityDataSource;
 //获取活动的个数
 - (NSInteger)countOfActivity;

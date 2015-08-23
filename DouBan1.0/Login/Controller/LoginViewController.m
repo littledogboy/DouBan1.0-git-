@@ -95,6 +95,10 @@
         
         //登陆成功后回调，同时将用户信息回传
         User * user = [[FileHandler shareInstance] user];
+        
+        
+        
+        
         self.block(user);
         
         //推出登陆页面

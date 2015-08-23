@@ -12,7 +12,7 @@
 #import "ActivityDetailView.h" // 导入活动详情视图
 #import "Activity.h"
 
-#import "DatabaseHandler.h"
+#import "DatabaseHandler.h" // 导入数据库操作头文件
 
 @interface ActivityDetailViewController ()
 
@@ -42,14 +42,19 @@
     
     //活动图片
     
-    if (_activity.activityImage == nil) {
+    if (_activity.activityImage == nil && _activity.imageFilePath == nil) {
         //没有图像，下载图像
         _detailView.activityImageView.image = [UIImage imageNamed:@"picholder"];
         [_activity loadImage];
         
         [_activity addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:nil];
-    }else{
+    }else if(_activity.imageFilePath != nil){
+        NSLog(@"%@", _activity.imageFilePath);
+        _detailView.activityImageView.image = [UIImage imageNamed:_activity.imageFilePath];
+    } else
+    {
         _detailView.activityImageView.image = _activity.activityImage;
+
     }
     
     
@@ -83,7 +88,7 @@
     self.title = @"活动详情";
 //    self.view.backgroundColor = [UIColor magentaColor];
     // **左返回按钮
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"btn_nav_back"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)]  style:(UIBarButtonItemStylePlain) target:self action:@selector(backBarButtonAction:)];
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"btn_nav_back"] imageWithRenderingMode:(UIImageRenderingModeAlwaysOriginal)] style:(UIBarButtonItemStylePlain) target:self action:@selector(backBarButtonAction:)];
     self.navigationItem.leftBarButtonItem = backButtonItem;
     
     // 在iOS8 系统下，UITabbar UINavigationBar 上的item自定义背景色和图片，
@@ -131,12 +136,17 @@
         
         // 定义登录成功后回调的block
         __block typeof(self) blockSelf = self;
+//        __block typeof(self) blockSelf = self;
 //        __block ActivityDetailViewController *detailVC = self;
         loginVC.block = ^(id userInfo){
 #pragma mark- 回调block 到数据库查询 判断有没有被收藏过
             // 登录成功后，自动收藏活动
             [blockSelf favoriteActivity]; // 防止循环引用
             
+            // 添加操作
+            // 1. 用户登录成功后执行回调方法，把该活动添加到数据库。
+            //  添加之前需要对该活动进行判断，如果已经添加，提示已经添加过。没有添加，则插入到数据库中，并且把 activity 的添加标识 改为yes。
+            // 在数据库里面根据id查找是否存在该活动
         };
         UINavigationController *navC = [[UINavigationController alloc] initWithRootViewController:loginVC];
         [self.navigationController presentViewController:navC animated:YES completion:nil];
@@ -144,13 +154,17 @@
         [loginVC release];
         [navC release];
         
-        
-        
     } else{ // 用户已经登录过了 直接收藏。 因此我们把收藏写成一个方法封装起来
-        
         [self favoriteActivity];
     }
 }
+
+
+- (void)hideAlertView:(UIAlertView *)alertView
+{
+    [alertView dismissWithClickedButtonIndex:0 animated:YES];
+}
+
 
 // 收藏活动
 - (void)favoriteActivity
@@ -166,12 +180,10 @@
         
         
     } else {
-        // 收藏标识 yes
-        _activity.isFavorite = YES; // 被收藏
         
         // 插入数据库
         [DatabaseHandler insertNewActivity:_activity];
-        
+        _activity.isFavorite = YES; // 收藏标识至为yes
         // 提示
         //显示alertView提示用户
         UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"收藏成功" delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
