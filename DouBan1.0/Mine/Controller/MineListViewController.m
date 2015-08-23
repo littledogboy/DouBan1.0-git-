@@ -10,6 +10,8 @@
 
 #import "LoginViewController.h"
 
+#define kClearnImageCache
+
 
 @interface MineListViewController ()
 
