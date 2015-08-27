@@ -6,6 +6,12 @@
 //  Copyright (c) 2015年 吴书敏. All rights reserved.
 //
 
+#include <Availability.h>
+
+#ifndef __OBJC__
+#warning "This project uses features only available in iOS SDK 3.0 and later."
+#endif
+
 #ifndef DouBan1_0_DouBan_PrefixHeader_pch
 #define DouBan1_0_DouBan_PrefixHeader_pch
 
@@ -13,3 +19,6 @@
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 
 #endif
+
+#include "Defined.h" // 导入共用的宏定义头文件。
+#include "FileHandler.h" // 导入 数据持久化头文件

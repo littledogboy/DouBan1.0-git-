@@ -9,6 +9,7 @@
 //  此为文件操作类 负责一些沙盒的路径操作， NSUserDefault 也属于沙盒操作。
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @class User;
 @interface FileHandler : NSObject
@@ -35,6 +36,20 @@
 - (NSString *)phoneNumber;
 
 - (User *)user;
+
+
+#pragma mark--- 图片缓存 --- 
+// cache 路径
+- (NSString *)cachePath;
+// 存储图片文件夹路径
+- (NSString *)downloadImageDirPath;
+// 图片在沙盒中的完整路径
+- (NSString *)imageSandBoxPathWithURL:(NSString *)url;
+// 把下载好的图片存储到沙盒中
+- (void)saveDownloadImage:(UIImage *)image toPath:(NSString *)path;
+// 清除沙盒中的图片缓存
+- (void)cleanDownloadImages;
+
 
 
 @end

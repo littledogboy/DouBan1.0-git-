@@ -12,8 +12,13 @@
 
 #import "ActivityFavoriteViewController.h" // 导入收藏活动列表
 
+#import "SDImageCache.h" // 导入SD 清除图片缓存头文件
 
-@interface MineListViewController ()
+#define kCleanCacheTag 101
+#define kLoginOutTag 102
+
+
+@interface MineListViewController () <UIAlertViewDelegate>
 
 @end
 
@@ -66,7 +71,7 @@
             cell.textLabel.text = @"我的电影";
             break;
         case 2:
-            cell.textLabel.text = @"我的";
+            cell.textLabel.text = @"清除缓存";
             break;
             
         default:
@@ -75,6 +80,47 @@
     
     return cell;
 }
+
+#pragma mark--- 清除缓存
+- (void)cleanImageCache
+{
+    // 使用警告框提醒用户是否清除缓存， 给alertView 添加代理， c 遵守代理协议，实现代理方法
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"是否清除缓存" delegate:self cancelButtonTitle:nil otherButtonTitles:@"", nil];
+    // 给alertView 添加tag 值，因为本页面中还有“注销用户” 使用了提醒视图。
+    alertView.tag = kCleanCacheTag;
+    [alertView show];
+    [alertView release]; // 不要忘记release
+}
+
+#pragma mark--- 遵守alertView 的协议。
+// 实现alertView 的协议方法
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    // 点击的是确定， index 从 0 取消 开始
+    if (buttonIndex == 1) {
+        switch (alertView.tag) {
+            case kCleanCacheTag:
+            {
+                // 通知者中心发出通知，清除缓存，1. 清除 model 的image 属性值， 2. 清除沙盒
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:kCleanCachedNotification object:nil];
+                
+                // 2. 清除沙盒里的图片, sd 第三方 也清除缓存
+                [[FileHandler shareInstance] cleanDownloadImages];
+                
+#pragma mark- ***我写到这里了
+                //
+                [[SDImageCache sharedImageCache] clearDisk];
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }
+}
+
+
 
 /*
 // Override to support conditional editing of the table view.
