@@ -108,9 +108,10 @@
                 // 2. 清除沙盒里的图片, sd 第三方 也清除缓存
                 [[FileHandler shareInstance] cleanDownloadImages];
                 
-#pragma mark- ***我写到这里了
-                //
+                // 调用了第三方sd中的清除图片缓存。
                 [[SDImageCache sharedImageCache] clearDisk];
+#pragma mark- ***我写到这里了。 准备添加显示清除了多少缓存方法。
+
             }
                 break;
                 
@@ -174,7 +175,8 @@
             
             break;
         case 2:
-            
+            // 清除缓存
+            [self cleanImageCache];
             break;
             
         default:

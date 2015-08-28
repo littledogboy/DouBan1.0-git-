@@ -26,6 +26,25 @@
     [super dealloc];
 }
 
+#pragma mark---- 重写init方法，注册为通知者对象， 清除缓存。
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCleanImageCacheNotification:) name:kCleanCachedNotification object:nil];
+    }
+    return self;
+}
+
+// 清除 model 的图片属性值。
+- (void)handleCleanImageCacheNotification:(NSNotification *)notification
+{
+    //清除缓存时，将image 由沙盒路径  置为空。
+    self.activityImage = nil;
+}
+
+
+
 #pragma mark---- NSCoding协议
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
@@ -154,8 +173,6 @@
 // 图片在沙盒中的路径
 - (NSString *)imageSandBoxPath:(NSString *)imageUrl
 {
-    // 沙盒路径
-    NSString *sandBoxPath = NSHomeDirectory();
     
     // cache路径
     NSString *cachePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];

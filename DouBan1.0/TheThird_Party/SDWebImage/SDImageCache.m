@@ -95,7 +95,7 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
         // initialise PNG signature data
         kPNGSignatureData = [NSData dataWithBytes:kPNGSignatureBytes length:8];
 
-        // Create IO serial queue
+        // Create IO serial queue 串行队列
         _ioQueue = dispatch_queue_create("com.hackemist.SDWebImageCache", DISPATCH_QUEUE_SERIAL);
 
         // Init default values
@@ -453,14 +453,20 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
 
 - (void)clearDiskOnCompletion:(SDWebImageNoParamsBlock)completion
 {
+    // ioQueue 为串行队列 serial queue
     dispatch_async(self.ioQueue, ^{
+        // 1.删除沙盒图片文件夹
         [_fileManager removeItemAtPath:self.diskCachePath error:nil];
+        // 2. 创建沙盒图片文件夹
         [_fileManager createDirectoryAtPath:self.diskCachePath
                 withIntermediateDirectories:YES
                                  attributes:nil
                                       error:NULL];
 
+        // 3.若completion 不为空，说明外界赋值，调用了该方法, 回调
+        // 空则不执行
         if (completion) {
+            // completion,返回到主队列 ，回调函数。
             dispatch_async(dispatch_get_main_queue(), ^{
                 completion();
             });

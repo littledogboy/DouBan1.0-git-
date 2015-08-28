@@ -189,6 +189,7 @@ typedef void(^SDWebImageCalculateSizeBlock)(NSUInteger fileCount, NSUInteger tot
 - (void)removeImageForKey:(NSString *)key fromDisk:(BOOL)fromDisk withCompletion:(SDWebImageNoParamsBlock)completion;
 
 /**
+ * 清除 内存中的缓存图片
  * Clear all memory cached images
  */
 - (void)clearMemory;
