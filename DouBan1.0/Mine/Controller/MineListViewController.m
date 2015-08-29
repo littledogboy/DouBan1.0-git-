@@ -111,6 +111,7 @@
                 // 调用了第三方sd中的清除图片缓存。
                 [[SDImageCache sharedImageCache] clearDisk];
 #pragma mark- ***我写到这里了。 准备添加显示清除了多少缓存方法。
+                
 
             }
                 break;

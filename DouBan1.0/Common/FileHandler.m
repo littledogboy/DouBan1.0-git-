@@ -110,6 +110,57 @@ static FileHandler * fileHandler = nil;
 }
 
 
+#pragma mark--- 清除沙盒中的图片缓存
+
+// 下载图片文件夹
+- (NSString *)downloadImageDirPath
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    // cache 路径
+    NSString *cachePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0];
+    
+    // 下载图片文件夹
+    NSString *imageManagerPath = [cachePath stringByAppendingPathComponent:@"DownloadImages"];
+    
+    // 判断文件夹是否存在，不存在创建，
+    if (NO == [fileManager fileExistsAtPath:imageManagerPath]) {
+    
+        [fileManager createDirectoryAtPath:imageManagerPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    
+    // 返回文件夹路径
+    return imageManagerPath;
+}
+
+// 图片路径
+- (NSString *)imageSandBoxPathWithURL:(NSString *)url
+{
+    // 根据图片的url，创建文件在存储时的文件名
+    NSString *newUrl = [url stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+    // 返回图片路径
+    return [[self downloadImageDirPath] stringByAppendingPathComponent:newUrl];
+}
+
+// 清除沙盒里面缓存下来的图片。
+- (void)cleanDownloadImages
+{
+    NSString *downloadDirPath = [self downloadImageDirPath];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSError *error = nil;
+    [fileManager removeItemAtPath:downloadDirPath error:&error];
+    
+    if (error != nil) {
+        NSLog(@"%s %d 清除图片缓存出错!", __FUNCTION__, __LINE__);
+    }
+    
+    // 清除之后，创建一个空的文件夹
+    [self downloadImageDirPath];
+}
+
+
 @end
 
 

@@ -582,7 +582,12 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
         NSDirectoryEnumerator *fileEnumerator = [_fileManager enumeratorAtPath:self.diskCachePath];
         for (NSString *fileName in fileEnumerator) {
             NSString *filePath = [self.diskCachePath stringByAppendingPathComponent:fileName];
+            // 获取文件的属性，返回值为key_value 对，键值对，字典
+            // attributesOfItemAtPath: 用来指定文件的路径。
+            // error: 指定错误。
             NSDictionary *attrs = [[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil];
+            // fileSize 为 fileManager 中 nsdictionary 的分类。
+            // @interface NSDictionary (NSFileAttributes)
             size += [attrs fileSize];
         }
     });
